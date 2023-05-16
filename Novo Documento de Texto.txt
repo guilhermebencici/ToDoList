@@ -1,0 +1,69 @@
+select scr.*
+  FROM 
+    DBVESTIB.SCRIPT_PASSOS_INSCRICAO SCR
+  where  
+    scr.cod_local_html IN (1,2)
+    and ( scr.cod_passo_inscricao = 632
+          OR (scr.cod_passo_inscricao IS NULL AND 632 IS NULL)
+         )
+    and ( scr.codconc = null
+          OR (scr.codconc IS NULL AND null IS NULL)
+         )         
+    AND ( scr.cod_instituicao = null
+          OR (scr.cod_instituicao IS NULL AND null IS NULL)
+         ) 
+    AND ( scr.COD_TPO_CONCURSO = null
+          OR (scr.COD_TPO_CONCURSO IS NULL AND null IS NULL)
+        )
+    AND ( scr.COD_AGRUPAMENTO = 1
+          OR (scr.COD_AGRUPAMENTO IS NULL AND 1 = -1)
+        )
+    AND ( scr.IND_TELA_INICIAL = 'N'
+          OR (scr.IND_TELA_INICIAL = 'N' AND 'N' IS NULL)
+        )
+        
+    and not exists(
+      select 1 from dbvestib.inscricao ins
+      where ins.codconc = null
+      and ins.codinsc = null
+      and ins.ind_script_google = 'S'
+      and scr.cod_local_html = 3
+    );  
+
+
+DBVESTIB.PC_PASSOS_INSCRICAO 
+
+
+
+select  dbvestib.pc_passos_inscricao.F_SCRIPT_PASSO(
+                                                                                2,
+                                                                                null,
+                                                                                'inscreva/passo/dadospessoais',
+                                                                                null,
+                                                                                null,
+                                                                                'N',
+                                                                                1) from dual
+                                                                                
+                                                                                
+              select *  from dbvestib.script_passos_inscricao x where  x.cod_passo_inscricao=632
+for update
+
+SELECT * FROM DBVESTIB.PASSOS_INSCRICAO P WHERE P.IND_EXIBIR='S' AND P.END_TELA LIKE '%inscreva/passo/dadospessoais%' and p.cod_tpo_concurso=64
+--codigo passo: 632
+
+select * from dbvestib.parametro_url;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
